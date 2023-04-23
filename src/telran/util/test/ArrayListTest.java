@@ -1,6 +1,6 @@
 package telran.util.test;
 
-import static org.junit.jupiter.api.Assertions.*;import java.lang.reflect.Array;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -163,6 +163,15 @@ void setUp() {
 	void testRemoveIfAll() {
 		assertTrue(list.removeIf(a -> true));
 		assertEquals(0, list.size());
+	}
+	@Test
+	void testRemoveIfPredicate() {
+		Integer[] expected = {10, -20,  50, 100, 30};
+		assertFalse(list.removeIf(a -> a % 2 != 0
+				&& a >= 10));
+		assertTrue(list.removeIf(a -> a % 2 != 0));
+		runTest(expected);
+		
 	}
 	private void runTest(Integer[] expected) {
 		int size = list.size() ;

@@ -166,14 +166,34 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int lastIndexOf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		int index = size - 1;
+		while (index >= 0 && res == -1) {
+			if (predicate.test(array[index])) {
+				res = index;
+			}
+			index--;
+		}
+		return res;
 	}
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return false;
+		int oldSize = size;
+//		int i = 0;
+//		while(i < size) {
+//			if(predicate.test(array[i])) {
+//				remove(i);
+//			} else {
+//				i++;
+//			}
+//		}
+		for(int i = size - 1; i >= 0; i--) {
+			if(predicate.test(array[i])) {
+				remove(i);
+			} 
+		}
+		return oldSize > size;
 	}
 
 }
