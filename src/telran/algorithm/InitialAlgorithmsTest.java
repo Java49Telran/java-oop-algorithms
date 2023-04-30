@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static telran.algorithm.InitialAlgorithms.*;
 class InitialAlgorithmsTest {
- int N_NUMBERS = 100000;
+ int N_NUMBERS = 10000000;
  short[] array;
 
  void setUpBigArray() {
@@ -44,10 +44,10 @@ class InitialAlgorithmsTest {
 	void isSum2Test() {
 		short[] array = {30000, 1, 5, 2, 10000, 0, 500,0};
 		short[] array1 = {30000, 1, 5, 2, 10000, 0, 500,0, Short.MAX_VALUE};
-//		assertTrue(isSum2(array, (short)30000));
-//		assertTrue(isSum2(array, (short)7));
-//		assertFalse(isSum2(array, (short)30003));
-//		assertFalse(isSum2(array, (short)8));
+		assertTrue(isSum2(array, (short)30000));
+		assertTrue(isSum2(array, (short)7));
+		assertFalse(isSum2(array, (short)30003));
+		assertFalse(isSum2(array, (short)8));
 		assertTrue(isSum2(array1, Short.MIN_VALUE));
 		
 	}
@@ -62,6 +62,29 @@ class InitialAlgorithmsTest {
 				getMaxPositiveWithNegativeReflect(array1));
 		assertEquals(-1,
 				getMaxPositiveWithNegativeReflect(array2));
+	}
+	@Test
+	@Disabled
+	void maxValueComplexityNTest() {
+		assertEquals(Long.MAX_VALUE, getMaxValueComplexityN());
+	}
+	@Test
+	void maxValueComplexityLogNTest() {
+		assertEquals(Long.MAX_VALUE, getMaxValueComplexityLogN());
+	}
+	private Long getMaxValueComplexityN() {
+		long res = 1;
+		while(res > 0) {
+			res++;
+		}
+		return res - 1;
+	}
+	private Long getMaxValueComplexityLogN() {
+		long res = 1;
+		while(res > 0) {
+			res *= 2;
+		}
+		return res - 1;
 	}
 
 }
