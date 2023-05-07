@@ -55,6 +55,8 @@ void setUp() {
 	@Test
 	void testGetIndex() {
 		assertEquals(10, list.get(0));
+		assertThrowsExactly(IndexOutOfBoundsException.class,
+				() -> list.get(list.size()));
 	}
 	@Test
 	void testRemovePattern() {
