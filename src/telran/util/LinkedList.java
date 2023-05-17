@@ -100,9 +100,10 @@ public class LinkedList<T> implements List<T> {
 		return lastIndexOf(obj -> isEqual(obj, pattern));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void sort() {
-		//TODO
+		sort((Comparator<T>)Comparator.naturalOrder());
 
 	}
 
@@ -113,9 +114,27 @@ public class LinkedList<T> implements List<T> {
 		//2. By applying Arrays.sort you sort the array from #1
 		//3. Passing over all LinkedList nodes and setting references to objects (T)
 		// in the appropriate order from #2
+		T[] array = toArray();
+	    Arrays.sort(array, comp);
+	    Node<T>current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	current.obj = array[index++];
+	    	current = current.next;
+	    }
 
 	}
-
+	private T[] toArray() {
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
+	    Node<T> current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	array[index++] = current.obj;
+	    	current = current.next;
+	    }
+	    return array;
+	}
 	@Override
 	public int indexOf(Predicate<T> predicate) {
 		int index = 0;
