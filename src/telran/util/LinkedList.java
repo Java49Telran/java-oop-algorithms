@@ -135,21 +135,7 @@ Node<T> current = head;
 		return current == null ? -1 : index;
 	}
 
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		Node<T> current = head;
-		Node<T> next = null;
-		int oldSize = size;
-		while (current != null) {
-			next = current.next;
-			if (predicate.test(current.obj)) {
-				removeNode(current);
-			}
-			current = next;
-
-		}
-		return oldSize > size;
-	}
+	
 
 	private void addNode(int index, Node<T> node) {
 		if (head == null) {

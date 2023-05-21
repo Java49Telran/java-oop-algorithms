@@ -93,9 +93,29 @@ public abstract class CollectionTest {
 		while(it2.hasNext()) {
 			it2.next();
 		}
-		assertEquals(-20,it1.next());
+		assertEquals(numbers[1],it1.next());
 		
 		assertThrowsExactly(NoSuchElementException.class, () -> it2.next());
+	}
+	@Test
+	void testIteratorRemove() {
+		Iterator<Integer> it = collection.iterator();
+		Integer[] expectedFirst = { -20, 7, 50, 100, 30 };
+		Integer[] expectedLast = { -20, 7, 50, 100};
+		
+		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+		it.next();
+		it.remove();
+		runTest(expectedFirst);
+		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+		while(it.hasNext()) {
+			it.next();
+		}
+		it.remove();
+		runTest(expectedLast);
+		
+		
+		
 	}
 	protected void runTest(Integer[] expected) {
 		Integer [] actual = collection.toArray(new Integer[0]);

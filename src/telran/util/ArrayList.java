@@ -11,11 +11,11 @@ public class ArrayList<T> implements List<T> {
 	private T[] array;
 	private int size;
 private class ArrayListIterator implements Iterator<T> {
-int index = 0;
+int currentIndex = 0;
 	@Override
 	public boolean hasNext() {
 		
-		return index < size;
+		return currentIndex < size;
 	}
 
 	@Override
@@ -24,7 +24,11 @@ int index = 0;
 			throw new NoSuchElementException();
 		}
 		
-		return array[index++];
+		return array[currentIndex++];
+	}
+	@Override
+	public void remove() {
+		ArrayList.this.remove(--currentIndex);
 	}
 	
 }
@@ -143,25 +147,7 @@ int index = 0;
 		return res;
 	}
 
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		int oldSize = size;
-//		int i = 0;
-//		while(i < size) {
-//			if(predicate.test(array[i])) {
-//				remove(i);
-//			} else {
-//				i++;
-//			}
-//		}
-		for(int i = size - 1; i >= 0; i--) {
-			if(predicate.test(array[i])) {
-				remove(i);
-			} 
-		}
-		return oldSize > size;
-	}
-
+	
 	@Override
 	public Iterator<T> iterator() {
 		
