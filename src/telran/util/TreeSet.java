@@ -18,6 +18,12 @@ public class TreeSet<T> implements Set<T> {
 	private Node<T> root;
 	private Comparator<T> comp;
 	private int size;
+	public TreeSet(Comparator<T> comp) {
+		this.comp = comp;
+	}
+	public TreeSet() {
+		this((Comparator<T>)Comparator.naturalOrder());
+	}
 	private class TreeSetIterator implements Iterator<T> {
 		Node<T> current;
 		Node<T> prev;
@@ -134,14 +140,48 @@ public class TreeSet<T> implements Set<T> {
 		Node<T> node = getNode(pattern);
 		if (node != null) {
 			removeNode(node);
+			res = true;
 		}
 		
 		return res;
 	}
 
 	private void removeNode(Node<T> node) {
-		// TODO Auto-generated method stub
+		if(node.left != null && node.right != null) {
+			removeJunction(node);
+		} else {
+			removeNonJunction(node);
+		}
 		size--;
+		
+	}
+	private void removeJunction(Node<T> node) {
+		Node<T> substitute = getMostNodeFrom(node.left);
+		node.obj = substitute.obj;
+		removeNonJunction(substitute);
+		
+	}
+	private Node<T> getMostNodeFrom(Node<T> node) {
+		while(node.right != null) {
+			node = node.right;
+		}
+		return node;
+	}
+	private void removeNonJunction(Node<T> node) {
+		Node<T> parent = node.parent;
+		Node<T> child = node.left == null ? node.right : node.left;
+		if (parent == null) {
+			root = child;
+		} else {
+			if(node == parent.left) {
+				parent.left = child;
+			} else {
+				parent.right = child;
+			}
+			if (child != null) {
+				child.parent = parent;
+			}
+		}
 		
 	}
 	@Override
