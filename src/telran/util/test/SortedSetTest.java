@@ -1,6 +1,6 @@
 package telran.util.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ public abstract class SortedSetTest extends SetTest {
 
 	@Override
 	protected Integer[] getActual(Integer[] array, int size) {
-		//System.out.println("Sorted test");
+		//for iterating in the sorted order no need an additional sorting
 		return array;
 	}
 	@Test
@@ -26,13 +26,25 @@ public abstract class SortedSetTest extends SetTest {
 	}
 	@Test
 	void ceilingTest() {
+		//{ 10, -20, 7, 50, 100, 30 };
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
-		//TODO test for the method ceiling
+		runTestForExisted(sortedSet, true);
+		assertEquals(50, sortedSet.ceiling(35));
+		assertEquals(-20, sortedSet.ceiling(-40));
+		assertNull(sortedSet.ceiling(101) );
+	}
+	private void runTestForExisted(SortedSet<Integer> sortedSet, boolean isCeiling) {
+		assertEquals(-20, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(10));
+		assertEquals(50, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(50));
+		assertEquals(100, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(100));
 	}
 	@Test
 	void floorTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
-		//TODO test for the method floor
+		runTestForExisted(sortedSet, false);
+		assertEquals(50, sortedSet.floor(55));
+		assertEquals(100, sortedSet.ceiling(101));
+		assertNull(sortedSet.ceiling(-40) );
 	}
 
 }
