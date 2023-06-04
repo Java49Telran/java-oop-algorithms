@@ -2,6 +2,8 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Test;
 
 import telran.util.Set;
@@ -17,12 +19,17 @@ public abstract class SortedSetTest extends SetTest {
 	@Test
 	void firstTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
+		
 		assertEquals(-20, sortedSet.first());
+		sortedSet.clear();
+		assertThrowsExactly(NoSuchElementException.class, ()->sortedSet.first());
 	}
 	@Test
 	void lastTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(100, sortedSet.last());
+		sortedSet.clear();
+		assertThrowsExactly(NoSuchElementException.class, ()->sortedSet.first());
 	}
 	@Test
 	void ceilingTest() {
@@ -34,17 +41,17 @@ public abstract class SortedSetTest extends SetTest {
 		assertNull(sortedSet.ceiling(101) );
 	}
 	private void runTestForExisted(SortedSet<Integer> sortedSet, boolean isCeiling) {
-		assertEquals(-20, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(10));
-		assertEquals(50, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(50));
-		assertEquals(100, isCeiling ? sortedSet.ceiling(10) :sortedSet.floor(100));
+		assertEquals(-20, isCeiling ? sortedSet.ceiling(-20) :sortedSet.floor(-20));
+		assertEquals(50, isCeiling ? sortedSet.ceiling(50) :sortedSet.floor(50));
+		assertEquals(100, isCeiling ? sortedSet.ceiling(100) :sortedSet.floor(100));
 	}
 	@Test
 	void floorTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		runTestForExisted(sortedSet, false);
 		assertEquals(50, sortedSet.floor(55));
-		assertEquals(100, sortedSet.ceiling(101));
-		assertNull(sortedSet.ceiling(-40) );
+		assertEquals(100, sortedSet.floor(101));
+		assertNull(sortedSet.floor(-40) );
 	}
 
 }
