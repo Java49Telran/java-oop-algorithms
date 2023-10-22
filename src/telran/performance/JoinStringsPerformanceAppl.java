@@ -8,7 +8,8 @@ public class JoinStringsPerformanceAppl {
 
 	private static final int N_STRINGS = 1000;
 	private static final int N_RUNS = 1000;
-
+    //FIXME rewrite the code by applying class reflection
+	// to get rid of JoinString implementations
 	public static void main(String[] args) {
 		String[] strings = getStrings();
 		String testNameString = getTestName("JoinStringsImpl");
